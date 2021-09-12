@@ -30,8 +30,6 @@ else
         echo "PLEASE MOUNT DRIVES: mount /dev/root_partition /mnt && swapon /dev/swap_partition"
         exit 1
 fi
-echo Put Drive Name
-read drivename
 
 pacstrap /mnt base linux linux-firmware base-devel sudo networkmanager zsh neovim grub
 

@@ -13,7 +13,7 @@
 # -Slips
 
 cat ./archinstallscript2.sh | less
-echo Put Drive Name
+echo 'Put Drive Name (example: sda, NOT /dev/sda)'
 read drivename
 
 ln -sf /usr/share/zoneinfo/America/Chicago /etc/localtime
@@ -22,15 +22,16 @@ sed -i 's/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
 locale-gen
 
 echo LANG=en_US.UTF-8 > /etc/locale.conf
-
-echo SliPC > /etc/hostname
+echo Enter Hostname:
+read hostname
+echo $hostname > /etc/hostname
 
 echo 127.0.0.1	        localhost > /etc/hosts
 echo ::1		localhost > /etc/hosts
-echo 127.0.1.1	SliPC.localdomain	SliPC > /etc/hosts
+echo 127.0.1.1	$hostname.localdomain	$hostname > /etc/hosts
 
 mkinitcpio -P
-
+echo Set Root Password:
 passwd 
 
 sed -i 's/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
@@ -38,6 +39,7 @@ sed -i 's/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
 echo "Setting up non-root user, please enter username:"
 read username
 useradd -m -G wheel -s /bin/zsh $username
+echo "Set Non-root password:"
 passwd $username
 echo "STOP!"
 echo "This script is about to install grub for the i386-pc target. Would you like to cancel now? (Y/N)"
